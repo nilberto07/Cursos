@@ -1,0 +1,4 @@
+   Debug parecido com o visual studio
+
+Para PHP no Visual code
+link: https://www.youtube.com/watch?v=LNIvugvmCyQ&ab_channel=TheCodeholic
