@@ -1,0 +1,14 @@
+	Passo a passo de como iniciar um programa
+Criar uma pasta (Entities) para as class;
+
+Class  {
+Declarar as propiedades
+Construtores
+Funções
+(ToString) se precisar
+}
+
+Programa principal( "é mais a interação com o usuario" );
+
+Iniciar as interações: Console.WriteLine( " " );
+Declarar as instancias (as class) para o recebimento dos valores;

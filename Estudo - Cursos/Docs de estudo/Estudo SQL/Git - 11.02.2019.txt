@@ -1,0 +1,10 @@
+						11/02/2019
+	° Transferindo arquivos para o Git:
+cmd: git push -u origin master
+Depois disso ele ja memorizou a sua conexção
+agora apenas 
+
+cmd: git push
+para subir os dados
+
+	°

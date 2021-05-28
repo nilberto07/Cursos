@@ -1,0 +1,8 @@
+	--Atualizar as informações de um campo
+UPDATE [Tabela]
+
+SET 
+	Coluna-a-ser-modificado = Valor-a-ser-modificado
+
+WHERE 
+	Linha-a-ser-modificado = Valor-correspondente-a-linha-afetada

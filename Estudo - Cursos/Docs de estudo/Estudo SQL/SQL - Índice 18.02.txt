@@ -1,0 +1,26 @@
+	--Criando Índices nas Tabelas
+
+CREATE TABLE tblTesteIndice(
+	col1 int,
+	col2 int
+)
+
+	--Índice não clusterizado
+CREATE NONCLUSTERED INDEX IDX_1 ON tblTesteIndice(col1)
+
+	--Índice clusterizado
+CREATE CLUSTERED INDEX IDX_2 ON tblTesteIndice(col2)
+
+DECLARE @i INT
+
+SET @i = 0
+
+WHILE @i < 10000
+BEGIN
+	INSERT INTO tblTesteIndice (col1, col2)
+		VALUES(ROUND(RAND() * 1000, 0), ROUND(RAND() * 1000, 0))
+		SET @i = @i + 1
+END
+
+SELECT * FROM tblTesteIndice
+

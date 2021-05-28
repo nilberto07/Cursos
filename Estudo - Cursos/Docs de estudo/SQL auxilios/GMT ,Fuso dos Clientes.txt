@@ -1,0 +1,15 @@
+		Fuso dos clientes
+No banco BluStock_System
+Select
+
+g.name
+
+, g.database_name
+
+, f.slug
+
+From groups g
+
+Inner Join fuso_list f on f.id = g.idfuso
+
+where g.deleted_at is null

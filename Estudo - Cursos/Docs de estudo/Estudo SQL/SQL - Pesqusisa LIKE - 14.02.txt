@@ -1,0 +1,3 @@
+	    Pesquisa de palavras:
+	Operador LIKE
+SELECT * FROM [Tabela] WHERE [Coluna] LIKE '%palavra-chave%'

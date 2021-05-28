@@ -1,0 +1,59 @@
+	--Criando uma Trigger(Gatilho)
+--Para tabela tblAluno quando for inserido um segistro
+CREATE TRIGGER nome
+
+ON nometabela 
+--ON: onde
+FOR INSERT, UPDATE, DELETE
+--Para - Inserir - Alterar - Excluir
+AS
+--AS: como
+BEGIN
+--BEGIN: começo
+	
+	--AÇÃO DA TRIGGER
+
+END
+--END: fim
+------------------------------------------------------------------------
+	--Exemplo
+CREATE TRIGGER trigEnviarEmailAlunoNovo
+
+ON tblAluno
+
+FOR INSERT
+AS
+BEGIN
+	DECLARE 
+		@IdAluno int,
+		@Nome varchar(100)
+
+	SELECT
+		@IdAluno = IdAluno,
+		@Nome = Nome
+
+	FROM
+		INSERTED
+
+	INSERT INTO tblEnviarEmail(
+		Destinatario,
+		Assunto,
+		Corpo
+	)
+	VALUES(
+		'nilberto07@gmail.com',
+		'novo aulo cadastrado',
+		'foi cadastrado o aluno. Código' + CAST(@IdAluno AS VARCHAR ) + 'nome' + @Nome
+	)
+
+END
+--------------------------------------------------------------------------------
+select * from tblAluno
+select * from tblEnviarEmail
+
+insert into tblAluno(
+	IdAluno, Nome, DataNascimento
+)
+values(
+	1, 'Nilberto Arcanjo', '2019-06-02'
+)

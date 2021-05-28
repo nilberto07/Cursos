@@ -1,0 +1,19 @@
+using System;
+using System.IO;
+
+namespace file_fileinfo_e_ioException
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string Caminho = @"c:\file\newfolder\file1.txt";
+
+            Console.WriteLine("GetDirectoryName: " + Path.GetDirectoryName(Caminho));
+            Console.WriteLine("DirectorySeparatorChar: " + Path.DirectorySeparatorChar);
+            Console.WriteLine("GetFileName: " + Path.GetFileName(Caminho));
+            Console.WriteLine("GetExtension: " + Path.GetExtension(Caminho));
+            Console.WriteLine("GetTempFileName: " + Path.GetTempFileName());
+        }
+    }
+}

@@ -1,0 +1,17 @@
+		--Comandos para ajudar no SQL
+
+	Buscar Script;
+sp_helptext [dbo.NomeDaReferencia]
+(Nao funciona em tabelas)
+
+	Declaração direto no SQL;
+DECLARE @valor int,
+		@texto varchar (40),
+		@data_nasc date,
+		@nada money
+	set @valor = 50
+	set @texto = 'bóson'
+	set @data_nasc = getdate()
+SELECT @valor as valor, @texto as texto,
+@data_nasc 'data de nascimenrto',
+@nada as salario

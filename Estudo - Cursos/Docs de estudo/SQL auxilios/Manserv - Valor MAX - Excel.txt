@@ -1,0 +1,6 @@
+		Manserv -  Valor Max de velocidade - Excel
+
+let
+    Fonte = Sql.Database("blustock.database.windows.net", "BluStock_System_MS", [Query="Select assets.description as Veículos, (select libraryevents.description from libraryevents where libraryevents.eventid =events.eventid ) as Evento, events.startdatetime, events.enddatetime, events.value from assets, events where events.eventid = 1 and events.startdatetime between '2019-04-26 00:00:00.199' and '2019-05-30 23:59:59.199' and assets.id_unit = events.unitid"])
+in
+    Fonte

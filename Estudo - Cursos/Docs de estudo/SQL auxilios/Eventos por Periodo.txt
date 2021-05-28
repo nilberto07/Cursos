@@ -1,0 +1,6 @@
+	Eventos por Periodo
+
+SELECT * from Events
+INNER JOIN assets ON assets.id_unit = Events.UnitId
+INNER JOIN LibraryEvents ON LibraryEvents.EventId = Events.EventId
+WHERE EndDateTime > '2019-04-26 00:00:01.000' AND EndDateTime < '2019-05-25 23:59:00.000'

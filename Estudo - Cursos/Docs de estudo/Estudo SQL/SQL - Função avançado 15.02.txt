@@ -1,0 +1,31 @@
+/*
+	Dados sobre o script
+	Função que retorno os dados completos do funcionarios.
+*/
+
+CREATE FUNCTION UDF_DadosCompletos()
+	RETURNS @Retorno TABLE(
+		NomeCompleto VARCHAR(70),
+		Idade INT,
+		Nascimento DATE,
+		Sexo VARCHAR(1),
+		AnosCasa INT,
+		Cargo VARCHAR(50)
+	)
+
+AS
+BEGIN
+	INSERT INTO @Retorno
+		SELECT
+			P.FirstName + ' ' + isnull(P.MiddleName, '') + '. ' + P.LastName AS NomeCompleto,
+			DATEDIFF(YEAR, E.BirthDate, GETDATE()) AS Idade,
+			E.BirthDate AS Nascimento,
+			E.Gender AS Sexo,
+			DATEDIFF(YEAR, E.HireDate, GETDATE()) AS AnosCasa,
+			E.JobTitle AS Cargo
+		FROM
+			[Person].[Person] P  INNER JOIN [HumanResources].[Employee] E
+			ON P.BusinessEntityID = E.BusinessEntityID
+
+			RETURN
+END

@@ -1,0 +1,39 @@
+	--Criando a view
+--É uma tabela Virtual
+--Na hora de chama, igual a tabelas normais
+Create view vwClientesAtivo
+As
+	Select
+		IdCliente,
+		Nome
+	From
+		tblCliente
+	where 
+		Ativo = 1
+
+	--Trazer todas as tabelas
+select * from tblCliente 
+
+	--Inserindo dados nas colunas
+insert tblCliente values (001, 'nome1', 12345678, 10.0,
+ 100.00, 2019-02-06, 859999-9999, 'fortaleza', 'CE', 1)
+
+insert tblCliente values (
+	2, 'nome2', 87654321, 10.00, 100.00, 2019-02-06, 85-9865-3254, 'fortaleza', 'CE', 0
+ )
+
+insert tblCliente values (
+	3, 'nome3', 00000000, 10.00, 200.00, '2019-02-06', '85-4561-4561', 'fortaleza', 'CE', 1
+ )
+
+insert tblCliente values (
+	4, 'nome4', '05697146302', 10.00, 200.00, '2019-02-06', '85-9874-3214', 'fortaleza', 'CE', 0
+ )
+
+	 --Utilizando a View
+select * from vwClientesAtivo
+
+	--Pode se trabalhar que nem uma tabela normal
+SELECT * FROM vwClientesAtivo WHERE IdCliente = 1
+
+SELECT * FROM vwClientesAtivo WHERE Nome LIKE '%nome1%'

@@ -1,0 +1,24 @@
+select si.name as Garagem,
+ev.Driverid as DriverId, 
+(select top 1 drivers.employee_number + ' - ' +  drivers.name from drivers where drivers.extended_id = ev.DriverId) as Motorista,
+ass.registration_number as NumRegistro, 
+ass.description as DesVeiculo, 
+	   (convert(varchar, ev.eventid) + ' - ' + le.Description) as EventId, 
+	   le.Description as DescEvento, 
+	   count(ev.eventid) as Qtd, 
+	   cast(ev.StartDateTime as date) as DataEvent,
+lp.Timestamp as UltimaPosicao
+from events ev
+inner join assets ass
+on ass.id_unit = ev.unitid
+inner join LibraryEvents le
+on le.EventId = ev.EventId 
+left join sites si
+on si.id = ass.site_id 
+left join LastPositions lp
+on lp.UnitId = ass.id_unit
+where ev.StartDateTime > '2019-08-05 00:00:00.000' AND EndDateTime < '2019-08-09 23:59:59.000'
+group by si.name, ev.driverid, ev.eventid, 
+ass.registration_number, ass.description, lp.Timestamp,
+	   le.Description, cast(ev.StartDateTime as date)
+	   order by cast(ev.StartDateTime as date)

@@ -1,0 +1,7 @@
+	update motorista excel
+="update drivers set extended_id =  "&G2&" where drivers_id = '"&B2&"';"
+
+sql: update drivers set extended_id =  2600340270 where drivers_id = '411620';
+ 
+ou
+=CONCAT("update drivers set employee_number =  '";D2;"' where drivers_id = '";A2;"'")

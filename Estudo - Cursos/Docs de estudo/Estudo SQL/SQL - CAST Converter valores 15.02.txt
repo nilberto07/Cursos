@@ -1,0 +1,5 @@
+	--Converter Valores 
+Primeiro resultado de variavel CAST((Segundo resultado)
+AS TIPO(0000))
+
+Ex.: CAST(DATEDIFF(YEAR, NomeDaColuna, GETDATE()) AS VARCHAR (4))

@@ -1,0 +1,36 @@
+	Curso Youtube SQL Server
+Constraint: Regras para determinada tabela;
+Todas as vezes que for alterar alguma coisa na usar: 
+	ALTER TABLE nomeDaTabela
+	ADD CONSTRAINT FK_ProdutoVendas
+	FOREIGN KEY (ColunaRecebeChaveSecundaria)
+	REFERENCES td_Produtos (ChavePrimaryDaQualEstaSendoReferencial)
+
+ALTER TABLE dbo.Veiculos
+	add contador int primary key identity(1,1)
+
+ALTER TABLE dbo.doc_exa ADD column_b VARCHAR(20) NULL, column_c INT NULL ;
+
+--Funções de converções
+
+cast(Nome_da_coluna as varchar(6))
+from
+---------------------------------
+convert(varchar(6), Nome_da_coluna)
+from 
+
+--Criar um Procedimento armazenado
+CREATE PROCEDURE nome_procedimento
+	(@Parâmetro Tipo_dados)
+AS
+bloco de codigo
+
+create procedure ProcedureTeste
+as
+select 'exercicio' as cliente
+
+--para acessar 
+exec ProcedureTeste
+--acessando o banco de dados
+create procedure TestePro
+as

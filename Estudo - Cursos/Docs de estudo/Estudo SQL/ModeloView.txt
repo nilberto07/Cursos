@@ -1,0 +1,26 @@
+/****** Script do comando SelectTopNRows de SSMS  ******/
+SELECT 	 [id_unit]
+      	,[description]
+      	,[registration_number]
+  FROM [dbo].[assets] where [deleted_at] is null
+
+---------------------------------------------------------------------
+
+CREATE VIEW [dbo].[EventosDiario]  
+AS   
+ Select   
+  E.UnitId,  
+  COUNT(E.EventId) QtdEventos,   
+  CONVERT(VARCHAR(10), DATEADD(HOUR,-3,E.StartDateTime), 120) Data,  
+  E.EventId ,  
+  CONCAT(E.UnitId,' - ',CONVERT(VARCHAR(10), DATEADD(HOUR,-3,E.StartDateTime), 103)) Codigo  
+  
+ From Events E  
+  
+ --where E.StartDateTime > '2018-12-01'  
+   
+ GROUP BY   
+  E.UnitId,  
+  CONVERT(VARCHAR(10), DATEADD(HOUR,-3,E.StartDateTime), 120),   
+  E.EventId,   
+  CONCAT(E.UnitId,' - ',CONVERT(VARCHAR(10), DATEADD(HOUR,-3,E.StartDateTime), 103))  

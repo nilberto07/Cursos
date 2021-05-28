@@ -1,0 +1,19 @@
+	--Esse script mostra os duplicados:
+
+
+SELECT extended_id, Count(*) FROM drivers
+GROUP BY extended_id
+HAVING Count(*) > 1
+
+	--Esse script deleta os duplicados deixando só o primeiro registro:
+
+
+DELETE FROM drivers
+where extended_id in
+  (select extended_id from drivers
+   group by extended_id 
+   having Count(extended_id)>1)
+and not id in
+  (select Min(id) from drivers 
+   group by extended_id
+   having Count(extended_id)>1)

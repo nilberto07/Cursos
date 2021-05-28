@@ -1,0 +1,9 @@
+		Bater quantidade de Eventos por Veiculo e por Evento
+select COUNT(EventId) as QtdEventos,
+CONVERT(VARCHAR(10), DATEADD(HOUR,-3,Events.StartDateTime), 120) data
+from Events 
+where DATEADD(HOUR,-3,Events.StartDateTime) between '2019-09-16 00:00:00.000' and '2019-09-16 23:59:59.000'
+and UnitId = 1783
+and EventId = 7
+group by 
+CONVERT(VARCHAR(10), DATEADD(HOUR,-3,Events.StartDateTime), 120)

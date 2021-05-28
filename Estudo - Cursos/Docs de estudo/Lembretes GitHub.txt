@@ -1,0 +1,33 @@
+	Passos:
+Obs: (Antes do commit)
+		Git Pull (toda hora)
+		Git status
+		Git add .
+		Git commit -am "Msg do Commit"
+		(outro git pull) verificar conflitos 
+		Caso tenha conflito resolver
+		Caso nao havendo conflito Git push
+/************************************************************************/
+git
+git init
+git init --bare
+git add "" .
+git diff --staged
+git commit -m "" . 
+git pull origin nomeDaBrench -> Subir o commit para a branch superior
+git branch
+git checkout
+git checkout -b nome-da-branch 
+git checkout nomeDaBranch -> Para mudar de branch
+git log --online
+git log --name-status
+git branch -D nome-da-branch deleta a branch
+git checkout--orphan nome branch vazia
+git merge nomebranch > carrega att de uma branch para atual
+
+git remote add origin <destino> > linka um projeto ao repositorio .git
+git remote set-url origin url > linka a um link github
+git remote -v verifica o que foi linkado
+git push origin master > envia a tua branch para a master do repo, ou cria a branch master se nao tiver
+git clone <caminho do repo a ser clonado>
+git pull origin master > sincroniza com o repo, fazer antes de dar push

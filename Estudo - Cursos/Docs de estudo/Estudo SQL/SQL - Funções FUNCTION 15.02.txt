@@ -1,0 +1,10 @@
+						15/02/2019
+		--Criação de funções
+CREATE FUNCTION dbo.ufnNomeDaFunção(@NomeDeUmaVariavel tipo())  
+RETURNS tipo()
+AS 
+BEGIN  
+
+	--Bloco de codigo    
+
+END

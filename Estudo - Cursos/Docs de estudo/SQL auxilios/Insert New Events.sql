@@ -1,0 +1,16 @@
+--select * from libraryevents
+
+--insert into libraryevents values (16, 'EVENTO NÃO TRATADO', 3, 7, null)
+insert into libraryevents values (17, 'EM MOVIMENTO', 3, 127, null)
+insert into libraryevents values (18, 'PARADO', 3, 128, null)
+insert into libraryevents values (19, 'MOTOR LIGADO', 3, 129, null)
+insert into libraryevents values (20, 'MOTOR DESLIGADO', 3, 130, null)
+insert into libraryevents values (21, 'BATERIA BAIXA', 2, 131, 132)
+insert into libraryevents values (22, 'BATERIA ALTA', 2, 133, 134)
+insert into libraryevents values (23, 'EXCESSO DE TEMPERATURA', 2, 135, 136)
+insert into libraryevents values (24, 'PRESSÃO DO AR A POR TEMPO', 2, 137, null)
+insert into libraryevents values (25, 'PRESSÃO DO AR B POR TEMPO', 2, 138, null)
+insert into libraryevents values (26, 'PRESSÃO DO AR A NA IGNIÇÃO', 2, 139, null)
+insert into libraryevents values (27, 'PRESSÃO DO AR B NA IGNIÇÃO', 2, 140, null)
+insert into libraryevents values (28, 'PRESSÃO DO AR A EM OPERAÇÃO', 2, 141, null)
+insert into libraryevents values (29, 'PRESSÃO DO AR B EM OPERAÇÃO', 2, 142, null)

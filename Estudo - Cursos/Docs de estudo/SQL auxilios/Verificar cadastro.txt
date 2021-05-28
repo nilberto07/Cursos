@@ -1,0 +1,17 @@
+/* Verificar cadastro de Veiculos 
+	Ver se os cadastro estão batendo
+*/
+
+		--Executar no grupo BluStock
+select (SELECT Organizations.Name FROM Organizations WHERE Organizations.OrgId = OrganizationUnits.ORGID)
+ AS GRUPO,  organizationunits.* 
+from organizationunits where UNITID = 0039
+
+		--Executar no grupo do resultado
+SELECT * FROM assets WHERE registration_number like '%2618'
+
+/*Cadastrado corretamente com serial e id_unit batendo com o outro cadastro*/
+
+	Verificar a tabela unitinformation para bater com o gerenciador:
+- Banco Blustock tabela Organizationunits
+- E banco do cliente tabela unitinformation

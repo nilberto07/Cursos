@@ -1,0 +1,19 @@
+	Declarações de Variaveis
+/*
+DECLARE @x INT;
+
+SET @x = 2
+
+select @x
+*/
+--Para o uso de variaveis é preciso 
+--declara-las no mesmo execute 
+DECLARE @tabela TABLE(
+	cdProduto int primary key,
+	nmProduto varchar(50)
+)
+
+INSERT INTO @tabela VALUES(
+	1, 'Churros'
+)
+SELECT * FROM @tabela

@@ -1,0 +1,16 @@
+	--Funções de Tempo
+
+--Diferente entre Date e Datetime
+	--Mostra a data atual
+	SELECT GETDATE()
+	--Quantos Dias(Day),Ano(Year) ou Meses(Month)
+	SELECT DATEDIFF(YEAR, '1992-08-06', GETDATE())
+	--Retira ou acresenta valores a data
+	SELECT DATEADD(MONTH, -1,
+		   DATEADD( DAY, -1, GETDATE()))
+	--Ver por partes. Ex: ver que dia da semana
+	SELECT DATEPART(WEEKDAY, DATEADD(YEAR, -1, GETDATE()))
+	SELECT DATEPART(WEEK, '2019-02-24')
+	--BETWEEN: Ver entre intervalos de tempo
+	--Formatar a data
+	SELECT FORMAT(CAST(GETDATE() AS DATE), 'dd/MM/yyyy')

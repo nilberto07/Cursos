@@ -1,0 +1,26 @@
+	Blustock:
+Nonato Mobs: http://13.90.20.104
+
+Usuário: nonato@mobilecomm.com.br
+
+Senha: No1165
+
+	Servidor:
+Area de Trabalho Remota
+IP: 191.232.193.180
+User: AdminMO
+Senha: Mbl@T@2013!##
+
+	Banco de dados (Mobs)
+SQL AZURE
+Endereço Server: blustock.database.windows.net
+User: AdminBluStock
+Senha: B8lu3St!aT#2018
+
+	E-mail's
+BIMOBS@mobilecomm.com.br
+Senha: BI1234###
+
+nilberto@mobilecomm.com.br
+Senha: Ni200607
+	

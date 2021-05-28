@@ -1,0 +1,12 @@
+	Comandos pendentes 
+
+1 - Ver unitid na tabela de envios
+	select * from sendmensagens where status = 0
+2 - Qual a organização
+	select * from organizationunits where unitid = 4512
+3 - Abrir o banco de acordo com o numero do grupo
+4 - Ver a ultima vez que ele comunicou (TimesTamp)
+	select * from LastPositions where UnitId = 4512
+5 - Ir para a aba do banco BluStock
+6 - Deletar os envios de comando daquele determinado grupo Unitid
+	delete from sendmensagens where status = 0 and unitid = 4512

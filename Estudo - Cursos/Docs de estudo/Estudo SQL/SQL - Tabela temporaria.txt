@@ -1,0 +1,16 @@
+INSERT INTO NOMEQQ(NOME, IDADE) 
+VALUES ('NILSOM', 25)
+
+ALTER TABLE NOMEQQ ADD IDADE INT NULL
+
+ALTER TABLE dbo.doc_exa ADD column_b VARCHAR(20) NULL, column_c INT NULL ;
+
+SELECT * FROM NOMEQQ 
+
+SELECT * INTO #TampNome from NOMEQQ
+
+SELECT * FROM #TampNome
+
+DROP TABLE #TampNome
+
+--Nao dá pra usar tabela temporaria em views

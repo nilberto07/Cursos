@@ -1,0 +1,245 @@
+InnerJoin = NATURALINNERJOIN(
+    SELECTCOLUMNS ('Tb_Viagens', "UnitID", 'Tb_Viagens'[unitID] & ""),
+    SELECTCOLUMNS('Tb_Eventos', "UnitID", 'Tb_Eventos'[unitID] & ""))
+
+------------------------
+
+GroupBy = GROUPBY(
+     Tb_Eventos,Tb_Eventos[assetid],Tb_Eventos[Motorista id],Tb_Eventos[Evento id],"EventId",SUMX(CURRENTGROUP(),Tb_Eventos[Evento id]))
+
+-------------------------------------
+Medida 2 = FILTER(
+    CROSSJOIN(Tb_Eventos,Tb_Viagens),
+    Tb_Eventos[Data - Inicio] >= Tb_Viagens[Data - Inicial] 
+    (Tb_Eventos[Data - Final] <= Tb_Viagens[Data - Final])
+)
+
+------------------------------------------
+select e.unitid 
+	, a.description 
+	, e.eventid 
+	, le.description 
+	, count(*) qtd
+from trips t
+	inner join events e with(nolock) on e.unitid = t.unitid and ( e.startdatetime >= t.tripstart and e.enddatetime <= t.tripend  ) and e.driverid = t.driverid
+	Inner Join assets a with(nolock) on a.id_unit = e.UnitId and a.deleted_at is null 
+	inner join LibraryEvents le with(nolock) on le.eventid =e.eventid 
+where tripstart between '2020-07-01 00:00:00.000' and '2020-07-01 01:00:00.000'
+and e.eventid not in (18,17,20,19,37,38,39,44,36)
+group by e.unitid 
+	, a.description 
+	, e.eventid 
+	, le.description 
+
+-------------------------------------------
+
+select e.unitid 
+	--, a.description 
+	, e.eventid 
+	, le.description 
+	, count(*) qtd
+from events e
+	--Inner Join assets a with(nolock) on a.id_unit = e.UnitId and a.deleted_at is null 
+	inner join LibraryEvents le with(nolock) on le.eventid = e.eventid 
+where e.startdatetime between '2020-07-01 00:00:00.000' and '2020-07-01 01:00:00.000'
+and e.eventid not in (18,17,20,19,37,38,39,44,36)
+and e.eventid = 6
+group by e.unitid 
+	--, a.description 
+	, e.eventid 
+	, le.description 
+order by e.unitid desc
+
+select * from drivers where extended_id is null
+
+--------------------------------------------
+
+= Table.CombineColumns(Table.TransformColumnTypes(#"Colunas com Nome Mudado", {{"assetid", type text}, {"Motorista id", type text}}, "pt-BR"),{"UnitId", "assetid", "Motorista id"},Combiner.CombineTextByDelimiter("", QuoteStyle.None),"IdRelacionamento")
+
+-------------------------------------------------------
+
+GroupBy = FILTER( 
+    CROSSJOIN(Tb_Viagens,Tb_Eventos,Tb_Motoristas),
+    AND( Tb_Viagens[IdRelacionamentoTrips] = Tb_Eventos[IdRelacionamentoEvents],
+    AND( Tb_Eventos[Data - Inicio] >= Tb_Viagens[DataInicial Trips],
+    AND( Tb_Eventos[Data - Final] <= Tb_Viagens[DataFinal Trips],
+    Tb_Motoristas[Extended id] = TB
+    )
+)
+
+--------------------------------------------------------------
+
+Tabelas Agrupada = FILTER( 
+    CROSSJOIN(Tb_Viagens,Tb_Eventos,Tb_Veiculos),
+    AND( Tb_Viagens[VeiculoId Trips] = Tb_Eventos[VeiculoId Events],
+    AND( Tb_Eventos[VeiculoId Events] = Tb_Veiculos[id],
+    AND( Tb_Eventos[Data - Inicio] >= Tb_Viagens[DataInicial Trips],
+    AND( Tb_Eventos[Data - Final] <= Tb_Viagens[DataFinal Trips],
+    Tb_Eventos[MotoristaId Events] = Tb_Viagens[MotoristaId Trips])
+            )
+        )
+    )
+)
+
+--------------------------------------------------------------------
+
+Tabelas Agrupada = FILTER(
+    CROSSJOIN(ALL(Tb_Eventos[Evento id],Tb_Eventos[VeiculoId Events],Tb_Eventos[Data - Inicio],Tb_Eventos[Data - Final]
+    ,Tb_Eventos[StartOdometer],Tb_Eventos[EndOdometer],Tb_Eventos[RecordedEvent]),
+    ALL(Tb_Viagens[MotoristaId Trips],Tb_Viagens[DataInicial Trips],Tb_Viagens[VeiculoId Trips],Tb_Viagens[DataFinal Trips])
+    ),
+    AND( Tb_Viagens[VeiculoId Trips] = Tb_Eventos[VeiculoId Events],
+    AND( Tb_Eventos[Data - Inicio] >= Tb_Viagens[DataInicial Trips],
+    Tb_Eventos[Data - Final] <= Tb_Viagens[DataFinal Trips])
+    )
+)
+
+
+KmRodadoMil = DIVIDE(
+    SUM('Tabelas Agrupada'[EndOdometer]) - SUM('Tabelas Agrupada'[StartOdometer]),1000.0,0)
+
+Qtd de Eventos = ROUND(COUNT('Tabelas Agrupada'[Evento id]),5)
+
+EpK - Eventos por KM = 
+    DIVIDE([Qtd de Eventos], [KmRodadoMil],0)
+
+
+Tabela Eventos:
+	Evento id
+	Assets id
+	Data Inicio
+	Data Final
+	StartOdometer e EndOdometer
+	
+Tabela Trips:
+	Motorista id
+
+
+Km Rodado Viagem = CALCULATE(
+DIVIDE(SUM(Tb_Eventos[EndOdometer]) - SUM(Tb_Eventos[StartOdometer]),1000.0,0),
+FILTER(CROSSJOIN(Tb_Viagens,Tb_Eventos),
+    AND( Tb_Eventos[Data - Inicio] >= Tb_Viagens[DataInicial Trips],
+     Tb_Eventos[Data - Final] <= Tb_Viagens[DataFinal Trips])))
+
+
+FILTER(CROSSJOIN(Tb_Viagens,Tb_Eventos,Tb_Veiculos),
+    AND( Tb_Viagens[VeiculoId Trips] = Tb_Eventos[VeiculoId Events],
+    AND( Tb_Eventos[VeiculoId Events] = Tb_Veiculos[id],
+    AND( Tb_Eventos[Data - Inicio] >= Tb_Viagens[DataInicial Trips],
+    AND( Tb_Eventos[Data - Final] <= Tb_Viagens[DataFinal Trips],
+    Tb_Eventos[MotoristaId Events] = Tb_Viagens[MotoristaId Trips]))))))
+
+QtdEventosColuna = 
+CALCULATE(
+COUNT(Tb_Eventos[Evento id]),
+FILTER(Tb_Viagens,
+AND( Tb_Eventos[Data - Inicio] >= Tb_Viagens[DataInicial Trips],
+     Tb_Eventos[Data - Final] <= Tb_Viagens[DataFinal Trips])))
+
+*-----------------------------------------------------------------------------*
+Qtd Eventos = 
+CALCULATE(
+COUNT(Tb_Eventos[Evento id]),
+FILTER(Tb_Viagens,
+AND( Tb_Eventos[Data - Inicio] >= Tb_Viagens[DataInicial Trips],
+     Tb_Eventos[Data - Final] <= Tb_Viagens[DataFinal Trips])))
+
+
+Tabelas Agrupada = FILTER(
+    CROSSJOIN(ALL(Tb_Eventos[Evento id],Tb_Eventos[VeiculoId Events],Tb_Eventos[Data - Inicio],Tb_Eventos[Data - Final]
+    ,Tb_Eventos[StartOdometer],Tb_Eventos[EndOdometer]),
+    ALL(Tb_Viagens[MotoristaId Trips],Tb_Viagens[DataInicial Trips],Tb_Viagens[DataFinal Trips], Tb_Viagens[Índice])
+    ),
+    AND( Tb_Eventos[Data - Inicio] >= Tb_Viagens[DataInicial Trips],
+    Tb_Eventos[Data - Final] <= Tb_Viagens[DataFinal Trips]
+    )
+)
+
+Tabelas Agrupada = FILTER(
+    NATURALINNERJOIN(Tb_Viagens,Tb_Eventos),
+        Tb_Eventos[Índice] = Tb_Viagens[ÍndiceTrips]
+    )
+
+Tabelas Agrupada = 
+    FILTER(
+        GROUPBY(
+            CROSSJOIN(Tb_Viagens,Tb_Eventos),Tb_Eventos[StartOdometer],Tb_Eventos[EndOdometer],Tb_Eventos[VeiculoId Events],
+    Tb_Eventos[MotoristaId Events],Tb_Eventos[Data - Inicio],Tb_Eventos[Data - Final],Tb_Viagens[DataFinal Trips],Tb_Viagens[DataInicial Trips],
+    Tb_Eventos[Índice],Tb_Viagens[ÍndiceTrips],Tb_Eventos[Evento id]),
+        AND(Tb_Eventos[Índice] = Tb_Viagens[ÍndiceTrips],
+        AND(Tb_Eventos[Data - Inicio] >= Tb_Viagens[DataInicial Trips],
+            Tb_Eventos[Data - Final] <= Tb_Viagens[DataFinal Trips])
+    )
+)
+
+
+QtdGroup3 = CALCULATE(
+    COUNT(Tb_Eventos[Evento id]),
+    FILTER(
+        GROUPBY(
+            CROSSJOIN(Tb_Viagens,Tb_Eventos),Tb_Eventos[Data - Inicio],Tb_Eventos[Data - Final],Tb_Eventos[IntercaladoEvents],
+            Tb_Viagens[DataFinal Trips],Tb_Viagens[DataInicial Trips],Tb_Viagens[IntercaladoTrips]),
+        AND(Tb_Eventos[IntercaladoEvents] = Tb_Viagens[IntercaladoTrips],
+        AND(Tb_Eventos[Data - Inicio] >= Tb_Viagens[DataInicial Trips],
+            Tb_Eventos[Data - Final] <= Tb_Viagens[DataFinal Trips])
+        )
+    )
+)
+
+
+Km RodadoVar = VAR Km = CALCULATE(DIVIDE(
+            SUM(Tb_Eventos[EndOdometer]) - SUM(Tb_Eventos[StartOdometer]),1000.0,0))
+            RETURN
+            Km
+            --IF(km>1000, IF(km<0,Km,0),Km)
+--------------------------------------------------------------------------------------------------
+DataGMT = Format(Tb_Eventos[Data - Inicio] - TIME(3,0,0), "dd/mm/yyyy")
+
+DateAdd( Now(), 4, Hours ), "dd-mm-yyyy hh:mm" )
+--------------------------------------------------------------------
+
+QtdGroup3 = CALCULATE(
+    COUNT(Eventos[Evento id]),
+    FILTER(
+            CROSSJOIN(Viagens,Eventos),
+            AND(Viagens[TripId] = Eventos[TRIPID],
+            AND(Viagens[MotoristaId Trips] = Eventos[MotoristaId Events],
+            Viagens[VeiculoId Trips] = Eventos[VeiculoId Events])
+        )
+    )
+)
+
+EVALUATE = 
+VAR A =
+    CROSSJOIN(Viagens,Eventos)
+        P_A,
+        "ProductKey", P_A[ProductKey]+0,
+        "Code", P_A[Code],
+        "Color", P_A[Color]
+    )
+VAR B =
+    SELECTCOLUMNS (
+        P_B,
+        "ProductKey", P_B[ProductKey]+0,
+        "Name", P_B[Name],
+        "Brand", P_B[Brand]
+    )
+VAR Result =
+    NATURALLEFTOUTERJOIN ( A, B )
+RETURN
+    Result
+
+
+Tabela = 
+    FILTER(
+            CROSSJOIN(ALL(Eventos[Evento id],Eventos[TRIPID Eventos],Eventos[MotoristaId Events],Eventos[VeiculoId Events]),
+            ALL(Viagens[TripId],Viagens[MotoristaId Trips],Viagens[VeiculoId Trips])),
+        AND(Viagens[TripId] = Eventos[TRIPID Eventos],
+        AND(Viagens[VeiculoId Trips] = Eventos[VeiculoId Events],
+        Viagens[MotoristaId Trips] = Eventos[MotoristaId Events])
+    )
+)
+
+
+TotalMes-2 = IF(ISBLANK(CALCULATE(Viagens[Km/L], DATEADD(Viagens[Data Inicial],-2,MONTH))),"Sem dados",
+                CALCULATE(Viagens[Km/L], DATEADD(Viagens[Data Inicial],-2,MONTH)))

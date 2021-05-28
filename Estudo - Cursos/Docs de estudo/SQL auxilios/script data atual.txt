@@ -1,0 +1,26 @@
+
+select sites.name as Garagem,
+assets.registration_number as NumRegistro, 
+	   assets.description as DesVeiculo, 
+	   (convert(varchar, events.eventid) + ' - ' + LibraryEvents.Description) as EventId, 
+	   LibraryEvents.Description as DescEvento, 
+	   count(events.eventid) as Qtd, 
+	   cast(events.StartDateTime as date) as DataEvent
+from assets, LibraryEvents, Events, LastPositions, sites
+where Events.UnitId = assets.id_unit
+and LibraryEvents.eventid = Events.eventid
+and LastPositions.UnitId = assets.id_unit
+and sites.id = assets.site_id
+and events.StartDateTime between cast(dateadd(month, -3, getdate()) - DAY(getdate()) + 1 as date) and cast(convert(char(8),EOMONTH(getdate()), 112) + ' 23:59:59.99' as datetime)
+group by sites.name, assets.registration_number, assets.description, events.eventid, 
+	   LibraryEvents.Description, cast(events.StartDateTime as date)
+	   order by cast(events.StartDateTime as date)
+
+	   --select EOMONTH(dateadd(month, 1, getdate()))
+cast(getdate() - DAY(getdate()) + 1 as date) and cast(convert(char(8),EOMONTH(getdate()), 112) + ' 23:59:59.99' as datetime)
+
+select * from Events
+where events.StartDateTime between cast(dateadd(month, - 2, getdate()) - DAY(getdate()) + 1 as date) and cast(convert(char(8),EOMONTH(getdate()), 112) + ' 23:59:59.99' as datetime)
+
+	Ver a data
+select dateadd(month, -1, getdate()) - DAY(getdate())

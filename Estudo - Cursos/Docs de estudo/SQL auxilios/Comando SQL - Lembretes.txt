@@ -1,0 +1,6 @@
+	Quantidade de comandos 
+select * from sendmensagens where status = 0
+
+	Se ja enviou determinado comando
+Select * from sendmensagens where unitid in (5650,5317,5083) and status = 0
+

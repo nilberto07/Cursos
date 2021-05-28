@@ -1,0 +1,36 @@
+							18/02/2019
+		CURSOR OTIMIZADO
+
+	--Variaveis do cursor
+DECLARE @NomeVariavel1 Tipo(Quantidade),
+		@NomeVariavel2 Tipo(Quantidade),
+		@NomeVariavel3 Tipo(Quantidade);
+
+	--Criando Cursor
+DECLARE NomeDoCursor CURSOR
+FOR SELECT TOP 10 NomeDaColuna, NomeDaColuna, NomeDaColuna FROM NomeDaTabela
+ORDER BY NomeDaColuna;
+
+	--Abrindo o Cursor
+OPEN NomeDoCursor;
+
+	--Selecionar os dados
+FETCH NEXT FROM NomeDoCursor
+INTO @NomeVariavel1, @NomeVariavel2, @NomeVariavel3;
+
+	--Iteração entre os dados retornados pelo cursor
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	
+	SELECT @NomeVariavel1 + ' ' + ISNULL (@NomeVariavel2, '') + ' ' + @NomeVariavel3;
+
+	--Receber os proximos dados
+	FETCH NEXT FROM NomeDoCursor
+	INTO @NomeVariavel1, @NomeVariavel2, @NomeVariavel3;
+END
+
+SELECT @NomeVariavel1, @NomeVariavel2, @NomeVariavel3;
+
+	--Fechando e desalocando o cursor da memoria
+CLOSE NomeDoCursor;
+DEALLOCATE NomeDoCursor;

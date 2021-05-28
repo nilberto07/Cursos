@@ -1,0 +1,22 @@
+DECLARE @Data int;
+
+set @Data = (SELECT DATEDIFF(YEAR, '1998-06-08', GETDATE()))
+
+if @Data < 20
+	print 'idade menor do que 20';
+	
+	else
+	print 'idade maior do que 20';
+
+print concat ('Idade = ', @Data)
+------------------------------------------------------------------
+SELECT TOP (1000) [IdAluno]
+      ,[Nome]
+      ,[DataNascimento]
+  FROM [Bd.TesteView].[dbo].[tblAluno]
+  WHERE DATEDIFF(YEAR, DataNascimento, GETDATE()) < 26
+  AND Nome LIKE '%aluno%'
+
+update tblAluno
+set Nome = 'aluno2'
+where IdAluno = 2
